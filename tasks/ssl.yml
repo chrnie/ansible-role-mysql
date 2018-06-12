@@ -1,0 +1,9 @@
+---
+
+- name: Update all mysql users to REQUIRE SSL
+  shell: >
+    mysql -u root -NBe "UPDATE mysql.user SET ssl_type = 'any' WHERE ssl_type = ''; FLUSH PRIVILEGES;"
+  changed_when: false
+  when: (( mysql_manage_ssl | bool) and (mysql_all_user_require_ssl | bool))
+
+

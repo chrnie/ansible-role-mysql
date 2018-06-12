@@ -95,6 +95,17 @@ wait_timeout = {{ mysql_wait_timeout }}
 lower_case_table_names = {{ mysql_lower_case_table_names }}
 event_scheduler = {{ mysql_event_scheduler_state }}
 
+{% if mysql_manage_ssl %}
+### MySQL Server ###
+## Securing the Database with ssl option and certificates ##
+## There is no control over the protocol level used. ##
+## mariadb will use TLSv1.0 or better. ##
+ssl=1
+ssl-ca={{mysql_ssl_certs_ca_path}}
+ssl-cert={{mysql_ssl_certs_cert_path}}
+ssl-key={{mysql_ssl_certs_privkey_path}}
+{% endif %}
+
 # InnoDB settings.
 {% if mysql_supports_innodb_large_prefix %}
 innodb_large_prefix = {{ mysql_innodb_large_prefix }}
