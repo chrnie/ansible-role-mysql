@@ -71,10 +71,18 @@
 
 - name: Remove anonymous MySQL users.
   mysql_user:
-     name: ""
-     host: "{{ item }}"
-     state: absent
+    name: ""
+    host: "{{ item }}"
+    state: absent
+    ssl_ca: "{{ mysql_ssl_certs_ca_path if mysql_manage_client_ssl }}"
+    ssl_cert: "{{ mysql_ssl_certs_cert_path if mysql_manage_client_ssl }}"
+    ssl_key: "{{ mysql_ssl_certs_privkey_path if mysql_manage_client_ssl }}"
   with_items: "{{ mysql_anonymous_hosts.stdout_lines|default([]) }}"
 
 - name: Remove MySQL test database.
-  mysql_db: "name='test' state=absent"
+  mysql_db:
+    name: test
+    state: absent
+    ssl_ca: "{{ mysql_ssl_certs_ca_path if mysql_manage_client_ssl }}"
+    ssl_cert: "{{ mysql_ssl_certs_cert_path if mysql_manage_client_ssl }}"
+    ssl_key: "{{ mysql_ssl_certs_privkey_path if mysql_manage_client_ssl }}"
