@@ -5,4 +5,7 @@
     collation: "{{ item.collation | default('utf8_general_ci') }}"
     encoding: "{{ item.encoding | default('utf8') }}"
     state: "{{ item.state | default('present') }}"
+    ssl_ca: "{{ mysql_ssl_certs_ca_path if mysql_manage_client_ssl }}"
+    ssl_cert: "{{ mysql_ssl_certs_cert_path if mysql_manage_client_ssl }}"
+    ssl_key: "{{ mysql_ssl_certs_privkey_path if mysql_manage_client_ssl }}"
   with_items: "{{ mysql_databases }}"

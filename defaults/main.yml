@@ -78,13 +78,14 @@ mysql_event_scheduler_state: "OFF"
 
 # SSL settings
 mysql_manage_ssl: no
+mysql_manage_client_ssl: no
 mysql_all_user_require_ssl: no
 mysql_ssl_certs_common_name: "{{ansible_fqdn}}"
-mysql_ssl_certs_path: "/etc/ssl/{{ssl_certs_common_name}}"
+mysql_ssl_certs_path: "/etc/ssl"
 mysql_ssl_ca_path: "/etc/ssl/ca"
-mysql_ssl_certs_privkey_path: "{{ssl_certs_path}}/{{ssl_certs_common_name}}.key"
-mysql_ssl_certs_cert_path: "{{ssl_certs_path}}/{{ssl_certs_common_name}}.crt"
-mysql_ssl_certs_ca_path: "{{ssl_ca_path}}/ca.crt"
+mysql_ssl_certs_privkey_path: "{{mysql_ssl_certs_path}}/server.key"
+mysql_ssl_certs_cert_path: "{{mysql_ssl_certs_path}}/server.crt"
+mysql_ssl_certs_ca_path: "{{mysql_ssl_ca_path}}/ca.crt"
 
 # InnoDB settings.
 mysql_innodb_file_per_table: "1"

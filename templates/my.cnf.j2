@@ -5,6 +5,12 @@
 port = {{ mysql_port }}
 socket = {{ mysql_socket }}
 
+{% if mysql_manage_client_ssl %}
+ssl-ca={{mysql_ssl_certs_ca_path}}
+ssl-cert={{mysql_ssl_certs_cert_path}}
+ssl-key={{mysql_ssl_certs_privkey_path}}
+{% endif %}
+
 [mysqld]
 port = {{ mysql_port }}
 bind-address = {{ mysql_bind_address }}
