@@ -52,10 +52,10 @@ Whether the global my.cnf should be overwritten each time this role is run. Sett
 
     mysql_config_include_files: []
 
-A list of files that should override the default global my.cnf. Each item in the array requires a "src" parameter which is a path to a file. An optional "force" parameter can force the file to be updated each time ansible runs.
+A list of files that should override the default global my.cnf. Each item in the array requires a "src" parameter which is a path to a file. An optional "force" parameter can force the file to be updated each time ansible runs. Good to know: Activating SSL in mysql server does not mean it's required to use it. You need to add minimum "REQUIRE SSL" to enforce an encrypted connection. "REQUIRE X509" requires ssl and a valid certificate on client side, while "REQUIRE SUBJECT ..." validates that the client show a certain certificate.
 
-    mysql_manage_ssl: no
-    mysql_manage_client_ssl: no
+    mysql_ssl: no
+    mysql_client_ssl: no
     mysql_all_user_require_ssl: no
     mysql_ssl_certs_common_name: "{{ansible_fqdn}}"
     mysql_ssl_certs_path: "/etc/ssl"
@@ -71,6 +71,7 @@ Set yes to use ssl. You have to provide the required certificates on your own.
 The MySQL databases to create. A database has the values `name`, `encoding` (defaults to `utf8`), `collation` (defaults to `utf8_general_ci`) and `replicate` (defaults to `1`, only used if replication is configured). The formats of these are the same as in the `mysql_db` module.
 
 You can also delete a database (or ensure it's not on the server) by setting `state` to `absent` (defaults to `present`).
+Additionally to normal mysql_user attributes you can provide ssl_type.
 
     mysql_users: []
 
@@ -131,6 +132,7 @@ The rest of the settings in `defaults/main.yml` control MySQL's memory usage and
     mysql_replication_role: ''
     mysql_replication_master: ''
     mysql_replication_user: []
+    mysql_replication_master_ssl: yes
 
 Replication settings. Set `mysql_server_id` and `mysql_replication_role` by server (e.g. the master would be ID `1`, with the `mysql_replication_role` of `master`, and the slave would be ID `2`, with the `mysql_replication_role` of `slave`). The `mysql_replication_user` uses the same keys as `mysql_users`, and is created on master servers, and used to replicate on all the slaves.
 
