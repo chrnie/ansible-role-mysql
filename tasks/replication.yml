@@ -49,8 +49,8 @@
     master_ssl_ca: "{{ mysql_ssl_certs_ca_path if mysql_replication_master_ssl }}"
     master_ssl_cert: "{{ mysql_ssl_certs_cert_path if mysql_replication_master_ssl }}"
     master_ssl_key: "{{ mysql_ssl_certs_privkey_path if mysql_replication_master_ssl }}"
-    master_ssl: "{{ yes if mysql_replication_master_ssl and mysql_ssl }}"
-    master_ssl_verify_identity: "{{ yes if mysql_replication_master_ssl_verify_identity and mysql_replication_master_ssl and mysql_ssl }}"
+    master_ssl: "{{ 'yes' if mysql_replication_master_ssl and mysql_ssl }}"
+    master_ssl_verify_identity: "{{ 'yes' if mysql_replication_master_ssl_verify_identity and mysql_replication_master_ssl and mysql_ssl }}"
   ignore_errors: True
   when: >
     ((slave.Is_Slave is defined and not slave.Is_Slave) or (slave.Is_Slave is not defined and slave|failed))
