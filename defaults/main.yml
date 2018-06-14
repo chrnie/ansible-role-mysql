@@ -135,7 +135,10 @@ mysql_max_binlog_size: "100M"
 mysql_binlog_format: "ROW"
 mysql_expire_logs_days: "10"
 mysql_replication_role: ''
+# must match ssl_certificates common name if ssl_verify_identity
 mysql_replication_master: ''
+# must match ansible_name of mysql_replication_master server
+mysql_replication_master_ansible_name: "{{ mysql_replication_master }}"
 mysql_replication_master_ssl: yes
 mysql_replication_master_ssl_verify_identity: no
 # waits for issue to be closed
