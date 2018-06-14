@@ -8,8 +8,12 @@
     state: "{{ item.state | default('present') }}"
     append_privs: "{{ item.append_privs | default('no') }}"
     encrypted: "{{ item.encrypted | default('no') }}"
-    ssl_ca: "{{ mysql_ssl_certs_ca_path if mysql_manage_client_ssl }}"
-    ssl_cert: "{{ mysql_ssl_certs_cert_path if mysql_manage_client_ssl }}"
-    ssl_key: "{{ mysql_ssl_certs_privkey_path if mysql_manage_client_ssl }}"
   with_items: "{{ mysql_users }}"
   no_log: true
+
+- name: Update MySQL users to REQUIRE SSL
+  shell: >
+    mysql -u root -NBe "UPDATE mysql.user SET ssl_type = '{{ item.ssl_type }}' WHERE user = '{{ item.name }}'; FLUSH PRIVILEGES;"
+  changed_when: false
+  with_items: "{{ mysql_users }}"
+  when: item.ssl_type is defined

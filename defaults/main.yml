@@ -77,9 +77,8 @@ mysql_wait_timeout: "28800"
 mysql_event_scheduler_state: "OFF"
 
 # SSL settings
-mysql_manage_ssl: no
-mysql_manage_client_ssl: no
-mysql_all_user_require_ssl: no
+mysql_ssl: no
+mysql_client_ssl: no
 mysql_ssl_certs_common_name: "{{ansible_fqdn}}"
 mysql_ssl_certs_path: "/etc/ssl"
 mysql_ssl_ca_path: "/etc/ssl/ca"
@@ -127,6 +126,8 @@ mysql_users: []
 #     host: 127.0.0.1
 #     password: secret
 #     priv: *.*:USAGE
+#     ssl_type: '', 'ANY', 'X509', 'SPECIFIED'
+# https://mariadb.com/kb/en/library/mysqluser-table/
 
 # Replication settings (replication is only enabled if master/user have values).
 mysql_server_id: "1"
@@ -136,5 +137,8 @@ mysql_expire_logs_days: "10"
 # mysql_recplication_role: <master|slave|mastermaster>
 mysql_replication_role: ''
 mysql_replication_master: ''
-# Same keys as `mysql_users` above.
+mysql_replication_master_ssl: yes
+mysql_replication_master_ssl_verify_identity: yes
+# waits for issue to be closed
+# Same keys as `mysql_users` above and master_ssl settings
 mysql_replication_user: []
